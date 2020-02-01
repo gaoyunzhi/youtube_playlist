@@ -15,6 +15,13 @@ def getList(pivot, text):
         x = tmp.find('"')
         yield tmp[:x]
 
+
+def videoFilter(title, v_len, _):
+    if '镇魂' in title and v_len > 60 * 20:
+        return False
+    return True
+
+
 with open('setting.yaml') as f:
     setting = yaml.load(f, Loader=yaml.FullLoader)
 
@@ -52,7 +59,10 @@ for v in set(videos):
         # print(e)
         # tb.print_exc()
 
+
+video_info = [x for x in video_info if videoFilter(**x)]
 video_info = sorted(video_info, key=lambda x: x[1])
 with open('video_info.txt', 'w') as f:
+    f.write('Title\tLength\tUrl\n')
     for x in video_info:
         f.write('%s\t%d\t%s\n' % x)
