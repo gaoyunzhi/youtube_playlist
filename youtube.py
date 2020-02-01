@@ -20,7 +20,7 @@ def getList(pivot, text):
 def videoFilter(title, v_len, author, _, raw):
     if '镇魂' in title and v_len > 60 * 20:
         return False
-    if matchKey(title, ['丁毅', '聰明的一休', '準提咒']):
+    if matchKey(title, ['丁毅', '聰明的一休', '準提咒', 'Bach']):
         return False
     if matchKey(author, ['sunfirekiss', '丁毅', 'YaleUniversity']):
         return False
