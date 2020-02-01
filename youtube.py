@@ -7,7 +7,7 @@ import yaml
 import re
 import time
 import traceback as tb
-from telegram_util import matchKey
+from telegram_util import matchKey, isCN
 
 def getList(pivot, text):
     for m in re.finditer(pivot, text):
@@ -18,13 +18,19 @@ def getList(pivot, text):
 
 
 def videoFilter(title, v_len, author, _, raw):
-    if '镇魂' in title and v_len > 60 * 20:
+    if matchKey(title, ['镇魂', '白宇', '朱一龙']) and v_len > 60 * 20:
         return False
-    if matchKey(title, ['丁毅', '聰明的一休', '準提咒', 'Bach']):
+    if matchKey(title, ['丁毅', '聰明的一休', '準提咒']):
         return False
     if matchKey(author, ['sunfirekiss', '丁毅', 'YaleUniversity']):
         return False
     if matchKey(raw, ['Human Behavioral Biology']):
+        return False
+    if matchKey(author, ['bach', 'piano']) or matchKey(title, ['bach', 'piano']):
+        return False
+    if v_len > 10 * 60:
+        return False
+    if isCN(title):
         return False
     return True
 
